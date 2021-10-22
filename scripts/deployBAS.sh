@@ -10,24 +10,17 @@ dbpassword="$7"
 grafanauser="$8"
 grafanapassword="$9"
 
-mkdir -p ../../charts
 CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
-####Keeping the values of below properties to default is advised.
+####Keeping the values of below properties to default is advised for most deployments
 storageSizeKafka=20G
 storageSizeZookeeper=20G
 storageSizeDB=20G
 storageSizeArchive=20G
 eventSchedulerFrequency="'*/10 * * * *'"
-#prometheusSchedulerFrequency='@daily'
 envType=lite
 ibmproxyurl='https://iaps.ibm.com'
 airgappedEnabled=false
-imagePullSecret=bas-images-pull-secret
-#requiredVersion="^.*4\.([0-9]{3,}|[3-9]?)?(\.[0-9]+.*)*$"
-#requiredServerVersion="^.*1\.([0-9]{16,}|[3-9]?)?(\.[0-9]+)*$"
-#ocpVersion="^\"4\.([0-9]{6,}|[6-9]?)?(\.[0-9]+.*)*$"
-#ocpVersion45="^\"4\.5\.[0-9]+.*$"
 basVersion=v1.0.0
 
 function getGenerateAPIKey() {
@@ -109,7 +102,7 @@ spec:
     backup_retention_period: 7
   event_scheduler_frequency: ${eventSchedulerFrequency}
   ibmproxyurl: ${ibmproxyurl}
-  image_pull_secret: ${imagePullSecret}
+  image_pull_secret: bas-images-pull-secret
   postgres:
     storage_class: ${storageClassDB}
     storage_size: ${storageSizeDB}
@@ -126,17 +119,7 @@ kubectl create -f ${CHARTS_DIR}/analytics-proxy.yaml
 sleep 50m
 
 #Generate an API Key to use it for authentication
-cat > "${CHARTS_DIR}/api-key.yaml" << EOL
-apiVersion: bas.ibm.com/v1
-kind: GenerateKey
-metadata:
-  name: bas-api-key
-spec:
-  image_pull_secret: bas-images-pull-secret
-EOL
-
 kubectl create -f ${CHARTS_DIR}/api-key.yaml
-
 
 check_for_key=$(getGenerateAPIKey)
 
