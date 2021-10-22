@@ -24,10 +24,10 @@ envType=lite
 ibmproxyurl='https://iaps.ibm.com'
 airgappedEnabled=false
 imagePullSecret=bas-images-pull-secret
-requiredVersion="^.*4\.([0-9]{3,}|[3-9]?)?(\.[0-9]+.*)*$"
-requiredServerVersion="^.*1\.([0-9]{16,}|[3-9]?)?(\.[0-9]+)*$"
-ocpVersion="^\"4\.([0-9]{6,}|[6-9]?)?(\.[0-9]+.*)*$"
-ocpVersion45="^\"4\.5\.[0-9]+.*$"
+#requiredVersion="^.*4\.([0-9]{3,}|[3-9]?)?(\.[0-9]+.*)*$"
+#requiredServerVersion="^.*1\.([0-9]{16,}|[3-9]?)?(\.[0-9]+)*$"
+#ocpVersion="^\"4\.([0-9]{6,}|[6-9]?)?(\.[0-9]+.*)*$"
+#ocpVersion45="^\"4\.5\.[0-9]+.*$"
 basVersion=v1.0.0
 
 function getGenerateAPIKey() {
@@ -85,6 +85,9 @@ kubectl create -f ${CHARTS_DIR}/bas-subscription.yaml
 #Create a secret named database-credentials for PostgreSQL DB and grafana-credentials for Grafana
 kubectl create secret generic database-credentials --from-literal=db_username=${dbuser} --from-literal=db_password=${dbpassword} -n ${PROJECTNAME} 
 kubectl create secret generic grafana-credentials --from-literal=grafana_username=${grafanauser} --from-literal=grafana_password=${grafanapassword} -n ${PROJECTNAME}
+
+#wait fot operator to fully start
+sleep 4m
 
 #Create the AnalyticsProxy instance
 cat > "${CHARTS_DIR}/analytics-proxy.yaml" << EOL
