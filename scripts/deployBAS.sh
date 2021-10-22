@@ -10,7 +10,7 @@ dbpassword="$7"
 grafanauser="$8"
 grafanapassword="$9"
 
-
+mkdir -p ../../charts
 CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
 ####Keeping the values of below properties to default is advised.

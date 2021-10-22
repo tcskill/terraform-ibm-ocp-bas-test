@@ -14,13 +14,16 @@ spec:
   image_pull_secret: bas-images-pull-secret
 EOL
 
-kubectl create -f ${CHARTS_DIR}/delete-db.yaml
+kubectl apply -f ${CHARTS_DIR}/delete-db.yaml
 
 sleep 5m
 
-kubectl delete AnalyticsProxy analyticsproxydeployment
-kubectl delete Subscription behavior-analytics-services-operator-migrated
+
+#kubectl delete Subscription behavior-analytics-services-operator-migrated
 kubectl delete GenerateKey bas-api-key
+kubectl delete AnalyticsProxy analyticsproxydeployment
+kubectl delete Dashboard dashboard
+
 kubectl delete OperatorGroup bas-operator-group
 kubectl delete Deployment postgres-operator
 kubectl delete Deployment behavior-analytics-services-operator
