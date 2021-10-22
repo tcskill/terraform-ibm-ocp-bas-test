@@ -87,7 +87,8 @@ cat > "${CHARTS_DIR}/analytics-proxy.yaml" << EOL
 apiVersion: bas.ibm.com/v1
 kind: AnalyticsProxy
 metadata:
-  name: analyticsproxydeployment
+  name: analyticsproxy-${PROJECTNAME}
+  namespace:  ${PROJECTNAME}
 spec:
   allowed_domains: "*"
   db_archive:
