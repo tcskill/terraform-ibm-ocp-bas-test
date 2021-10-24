@@ -120,6 +120,16 @@ kubectl create -f ${CHARTS_DIR}/analytics-proxy.yaml
 sleep 50m
 
 #Generate an API Key to use it for authentication
+cat > "${CHARTS_DIR}/api-key.yaml" << EOL
+apiVersion: bas.ibm.com/v1
+kind: GenerateKey
+metadata:
+  name: bas-api-key
+  namespace:  ${PROJECTNAME}
+spec:
+  image_pull_secret: bas-images-pull-secret
+EOL
+
 kubectl create -f ${CHARTS_DIR}/api-key.yaml
 
 check_for_key=$(getGenerateAPIKey)
