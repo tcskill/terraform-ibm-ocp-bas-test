@@ -9,7 +9,6 @@ kubectl delete -f ${CHARTS_DIR}/api-key.yaml
 kubectl delete -f ${CHARTS_DIR}/analytics-proxy.yaml
 kubectl delete -f ${CHARTS_DIR}/bas-subscription.yaml
 kubectl delete -f ${CHARTS_DIR}/bas-og.yaml
-kubectl delete ClusterServiceVersion behavior-analytics-services-operator.v1.1.0
 kubectl delete CustomResourceDefinition airgappeddeployments.bas.ibm.com
 kubectl delete CustomResourceDefinition analyticsproxies.bas.ibm.com
 kubectl delete CustomResourceDefinition dashboards.bas.ibm.com

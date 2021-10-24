@@ -27,14 +27,14 @@ function getGenerateAPIKey() {
 
 	retryCount=10
 	retries=0
-	check_for_key=$(kubectl get secret bas-api-key --ignore-not-found)
+	check_for_key=$(kubectl get secret bas-api-key -n ${PROJECTNAME} --ignore-not-found)
 	until [[ $retries -eq $retryCount || $check_for_key != "" ]]; do
 		sleep 5
-		check_for_key=$(kubectl get secret bas-api-key --ignore-not-found)
+		check_for_key=$(kubectl get secret bas-api-key -n ${PROJECTNAME} --ignore-not-found)
 		retries=$((retries + 1))
 	done
 	if [[ $check_for_key != "" ]]; then
-	   check_for_key=$(kubectl get secret bas-api-key --output="jsonpath={.data.apikey}" | base64 -d)
+	   check_for_key=$(kubectl get secret bas-api-key -n ${PROJECTNAME} --output="jsonpath={.data.apikey}" | base64 -d)
 	fi
 	echo "$check_for_key"
 }
