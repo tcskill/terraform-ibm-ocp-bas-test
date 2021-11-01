@@ -1,6 +1,12 @@
 #  IBM Behavior Analytics Services terraform module
 
-Deploys IBM Behavior Analytics Services in a RedHat OpenShift Cluster
+Deploys IBM Behavior Analytics Services in a RedHat OpenShift Cluster into the kubernetes namspace specified in the bas_projectName variable.  This kubernetes namespace is created automatically.  A cloud file and block storage classes are needed.  
+
+After installation key values are output in the log are:
+
+- API KEY
+- BAS Endpoint URL
+- Grafana URL
 
 ## Supported platforms
 
@@ -12,7 +18,6 @@ The module uses the following elements
 
 ### Terraform providers
 
-- helm - used to configure the scc for OpenShift
 - null - used to run the shell scripts
 
 ### Environment
@@ -26,12 +31,20 @@ namespace to be created. The following companion
 modules can help provide the required information:
 
 - Cluster - https://github.com/ibm-garage-cloud/terraform-cluster-ibmcloud
-- Namespace - https://github.com/ibm-garage-cloud/terraform-cluster-namespace
 
 ## Example usage
 
 ```hcl-terraform
-module "dev_ocp_bas" {
+module "mas-bas" {
+  source = "github.com/cloud-native-toolkit/terraform-ocp-bas"
+
+  cluster_config_file      = module.cluster.config_file_path
+  cluster_type             = module.cluster.platform.type_code
+  cluster_ingress_hostname = module.cluster.platform.ingress
+  tls_secret_name          = module.cluster.platform.tls_secret
+  
+  bas_dbpassword=var.mybas_dbpassword
+  bas_grafapassword=var.mybas_grafapassword
 
 }
 ```
