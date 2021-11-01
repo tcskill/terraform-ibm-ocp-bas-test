@@ -1,8 +1,10 @@
 #  IBM Behavior Analytics Services terraform module
 
+![Verify and release module](https://github.com/cloud-native-toolkit/terraform-ibm-ocp-bas/workflows/Verify%20and%20release%20module/badge.svg)
+
 Deploys IBM Behavior Analytics Services in a RedHat OpenShift Cluster into the kubernetes namspace specified in the bas_projectName variable.  This kubernetes namespace is created automatically.  A cloud file and block storage classes are needed.  
 
-After installation key values are output in the log are:
+After installation key values output in the log are:
 
 - API KEY
 - BAS Endpoint URL
@@ -36,7 +38,7 @@ modules can help provide the required information:
 
 ```hcl-terraform
 module "mas-bas" {
-  source = "github.com/cloud-native-toolkit/terraform-ocp-bas"
+  source = "github.com/cloud-native-toolkit/terraform-ibm-ocp-bas"
 
   cluster_config_file      = module.cluster.config_file_path
   cluster_type             = module.cluster.platform.type_code
