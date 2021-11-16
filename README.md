@@ -4,7 +4,7 @@
 
 Deploys IBM Behavior Analytics Services in a RedHat OpenShift Cluster into the kubernetes namspace specified in the bas_projectName variable.  This kubernetes namespace is created automatically.  A cloud file and block storage classes are needed.  
 
-After installation key values output in the log are:
+After installation key values output are:
 
 - API KEY
 - BAS Endpoint URL

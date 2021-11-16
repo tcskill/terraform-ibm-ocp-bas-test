@@ -146,3 +146,10 @@ echo $bas_endpoint_url
 echo "===========Grafana URL=============="
 echo $grafana_dashboard_url
 
+if [[ -z "${TMP_DIR}" ]]; then
+  TMP_DIR="./.tmp"
+fi
+mkdir -p "${TMP_DIR}"
+
+BASKEY=$(kubectl get secret bas-api-key -n ${PROJECTNAME} --output="jsonpath={.data.apikey}" | base64 -d)
+echo ${BASKEY} > ${TMP_DIR}/bas-key

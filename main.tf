@@ -1,6 +1,7 @@
 locals {
   bin_dir = module.setup_clis.bin_dir
   tmp_dir = "${path.cwd}/.tmp"
+  
 }
 
 
@@ -44,4 +45,8 @@ resource "null_resource" "deploy_bas" {
   }
 }
 
-
+data "local_file" "baskey" {
+    depends_on = [null_resource.deploy_bas]
+    
+    filename = "${local.tmp_dir}/bas-key"
+}
